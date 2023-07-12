@@ -1,16 +1,19 @@
 [{
     "link": {"text": "Início", "url": "index.html"},
     "pageTitle": "Página Inicial",
-    "content": "This is the Home content"
+    "content": "This is the Home content",
+    "published": true
 },
 {
     "link": {"text": "Sobre", "url": "about.html"},
     "pageTitle": "Página Sobre",
-    "content": "This is the About content"
+    "content": "This is the About content",
+    "published": true
 },
 {
     "link": {"text": "Contato", "url": "contact.html"},
     "pageTitle": "Página de Contato",
-    "content": "This is the Contact content"
+    "content": "This is the Contact content",
+    "published": false
 }]
 

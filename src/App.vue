@@ -5,7 +5,7 @@
         :nav-link-click="(index) => activePage = index"
     ></Navbar>
 
-    <div v-show="false">hide this content</div>
+    <div v-show="false">conteudo escondido</div>
 
     <!-- <page-viewer
         v-if="pages.length > 0"
@@ -46,7 +46,7 @@ export default {
             this.pages = data;
         },
         pageCreated(pageObj) {
-            console.log(pageObj)
+            this.pages.push(pageObj)
         }
     }
 }
