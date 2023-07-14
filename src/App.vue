@@ -1,25 +1,24 @@
 <template>
     <Navbar
         :pages="pages"
-        :active-page="activePage"
-        :nav-link-click="(index) => activePage = index"
+        :active-page="activePage"   
     ></Navbar>
 
     <div v-show="false">conteudo escondido</div>
 
-    <!-- <page-viewer
+    <page-viewer
         v-if="pages.length > 0"
         :page="pages[activePage]"
-    ></page-viewer> -->
+    ></page-viewer>
 
     <create-page
-        :page-created="pageCreated"
+        @page-created="pageCreated"
     ></create-page>
 </template>
 
 <script>
-import PageViewer from './components/PageViewer.vue';
 import Navbar from './components/Navbar.vue';
+import PageViewer from './components/PageViewer.vue';
 import CreatePage from './components/CreatePage.vue';
 
 
@@ -31,6 +30,10 @@ export default {
     },
     created() {
         this.getPages();
+
+        this.$bus.$on('navbarLinkActived', (index) => {
+            this.activePage = index;
+        });
     },
     data() {
         return {
