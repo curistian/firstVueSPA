@@ -5,7 +5,7 @@
             :class="activeClasses"
             aria-current="page"
             :href="page.link.url"
-            :title="`This link goes to the ${page.link.text} page`"
+            :title="`esse link vai para a página de ${page.link.text}`"
             @click.prevent="$bus.$emit('navbarLinkActived', index)"
         >{{page.link.text}}</a>
     </li>
