@@ -4,7 +4,9 @@
         :active-page="activePage"   
     ></Navbar>
 
-    <div v-show="false">conteudo escondido</div>
+    <router-view></router-view>
+
+    <!-- <div v-show="false">conteudo escondido</div>
 
     <page-viewer
         v-if="pages.length > 0"
@@ -13,7 +15,7 @@
 
     <create-page
         @page-created="pageCreated"
-    ></create-page>
+    ></create-page> -->
 </template>
 
 <script>
