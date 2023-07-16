@@ -1,30 +1,49 @@
 <template>
-    <p>{{data.counter}}</p>
-    <button @click.prevent="click">click</button>
+    <h4>Páginas</h4>
+    <div class="text-end">
+        <router-link
+            to="/pages/create"
+            class="btn btn-primary btn-sm"
+        >Nova Página</router-link>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Texto de Link</th>
+                <th>Publicado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                v-for="(page, index) in $pages.getAllPages()"
+                :key="index"
+                @click="goToPage(index)"
+            >
+                <td>{{ page.pageTitle }}</td>
+                <td>{{ page.link.text }}</td>
+                <td>{{ page.published ? "sim" : "não"}}</td>
+
+            </tr>
+        </tbody>
+    </table>
 </template>
 
 <script setup>
-import { ref, reactive} from 'vue';
+import { ref, reactive, inject} from 'vue';
+import { useRouter } from 'vue-router';
 
-//const counter = ref(0);
-const data = reactive({counter: 0})
+const $pages = inject('$pages');
+const router = useRouter();
 
-function click() {
-    //counter.value++;
-    data.counter++
+function goToPage(index) {
+    router.push({path: `pages/${index}/edit`})
 }
 
-
-/* export default {
-    data() {
-        return {
-            counter: 0
-        };
-    },
-    methods: {
-        click() {
-            this.counter++;
-        }
-    }
-} */
 </script>
+
+<style scoped>
+.table.table-hover tr:hover {
+    cursor: pointer;
+}
+</style>
