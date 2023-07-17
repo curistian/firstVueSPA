@@ -27,22 +27,12 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="" class="form-label">
-                        Link do texto
+                        Texto de Link
                     </label>
                     <input
                         type="text"
                         class="form-control"
                         v-model="linkText"
-                    />
-                </div>
-                <div class="mb-3">
-                    <label for="" class="form-label">
-                        Link URL
-                    </label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        v-model="linkUrl"
                     />
                 </div>
                 <div class="row mb-3">
@@ -64,71 +54,47 @@
             </div>
         </form>
 </template>
-<script>
-export default {
-    emits: {
-        pageCreated({pageTitle, content, link, published}){
-            if (!pageTitle) {
-                return false;
-            }
+<script setup>  
+import {inject, ref, computed, watch} from 'vue';
+import {useRouter} from 'vue-router'
 
-            if (!content) {
-                return false;
-            }
+const bus = inject('$bus')
+const pages = inject('$pages');
+const router = useRouter();
 
-            if(!link || !link.text || !link.url) {
-                return false;
-            }
-            
-            return true;
-        },
-    props: []
-    
-    },
-    computed: {
-        isFormInvalid() {
-            return !this.pageTitle || !this.content || !this.linkText || !this.linkUrl;
-        }
-    },
-    data() {
-        return {
-            pageTitle: '',
-            content: '',
-            linkText: '',
-            linkUrl: '',
-            published: true
-        }
-    },
-    methods: {
-        submitForm() {
-            if (!this.pageTitle || !this.content || !this.linkText || !this.linkUrl) {
-                alert ('Favor preencher todo o formulário.');
-                return;
-            }
+let pageTitle = ref('');
+let content = ref('');
+let linkText = ref('');
+let linkUrl = ref('');
+let published = ref(true);
 
-            this.$emit('pageCreated', {
-                pageTitle: this.pageTitle,
-                content: this.content,
-                link: {
-                    text: this.linkText,
-                    url: this.linkUrl
-                },
-                published: this.published
-            });
-
-            pageTitle = '';
-            content = '';
-            linkText = '';
-            linkUrl = '';
-            published = true;
-        }
-    },
-    watch: {
-        pageTitle(newTitle, oldTitle) {
-            if (this.linkText === oldTitle) {
-                this.linkText = newTitle;
-            }
-        }
+function submitForm() {
+    if (!pageTitle || !content || !linkText) {
+        alert ('Favor preencher todo o formulário.');
+        return;
     }
+    let newPage = {
+        pageTitle: pageTitle.value,
+        content: pageTitle.value,
+        link: {
+            text: linkText.value,
+        },
+        published: pageTitle.value
+    }
+    
+    pages.addPage(newPage)
+
+    bus.$emit('page-created', newPage);
+
+    router.push({path: '/pages'});
 }
+
+const isFormInvalid = computed(() => !pageTitle || !content || !linkText || !linkUrl);
+
+watch(pageTitle, (newTitle, oldTitle) => {
+    if (linkText.value === oldTitle) {
+        linkText.value = newTitle;
+    }
+})
+    
 </script>

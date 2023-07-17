@@ -58,9 +58,13 @@
                 @click.prevent="submit"
             >Editar</button>
             <button
-                class="btn btn-secondary"
+                class="btn btn-secondary me-2"
                 @click.prevent="goToPagesList"
             >Cancelar</button>
+            <button
+                class="btn btn-danger"
+                @click.prevent="deletePage"
+            >Deletar</button>
         </div>
     </form>
 </template>
@@ -88,8 +92,16 @@ function submit() {
     goToPagesList();
 }
 
+function deletePage() {
+    pages.removePage(index);
+
+    bus.$emit('page-deleted', {index});
+
+    goToPagesList();
+}
+
 function goToPagesList() {
-    router.push({path: '/pages'})
+    router.push({path: '/pages'}) 
 }
 
 </script>
